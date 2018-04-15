@@ -1,4 +1,4 @@
-# github_api
+# Flutter-Github-API
 
 A new Flutter application.
 
