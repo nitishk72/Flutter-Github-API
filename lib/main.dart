@@ -19,11 +19,13 @@ class Github extends StatelessWidget {
 }
 
 class ProfileCard extends StatelessWidget {
-  ProfileCard({this.text,this.image ,this.location,this.animationController});
+  ProfileCard({this.text,this.image ,this.public_repos,this.following,this.followers,this.animationController});
 
   final String text;
   final String image;
-  final String location;
+  final int public_repos;
+  final int followers;
+  final int following;
   final AnimationController animationController;
   @override
   Widget build(BuildContext context) {
@@ -51,15 +53,21 @@ class ProfileCard extends StatelessWidget {
                           text,
                           style: Theme.of(context).textTheme.title
                       ),
-                      new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: new Text(location),
+                      new Padding(padding: EdgeInsets.only(bottom: 30.0)),
+                      new Text('Public Repo : $public_repos'),
+                      new Padding(padding: EdgeInsets.only(bottom: 6.0)),
+                      new Row(
+                        children: <Widget>[
+                          new Text('Followers : $followers'),
+                          new Padding(padding: EdgeInsets.only(right: 15.0)),
+                          new Text('Following : $following'),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ],
-            ),
+            ),  
           )
         )
     );
@@ -78,29 +86,30 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
   Future _getUser(String text) async{
     _textController.clear();
     String url = "https://api.github.com/users/";
-      url = url+text;
       print(url);
       var res = await http
-          .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
+          .get(Uri.encodeFull(url+text), headers: {"Accept": "application/json"});
       setState(() {
         resBody = json.decode(res.body);
       });
-      print('dimple '+res.body);
-      assert(resBody['name']!=null);
-      ProfileCard card = new ProfileCard(
-        text: resBody['name'],
-        image: resBody['avatar_url'],
-        location: resBody['location'],
-        animationController: new AnimationController(
-          duration: new Duration(milliseconds: 700),
-          vsync: this,
-        ),
-      );
-
-      setState(() {
-        _card.insert(0, card);
-      });
-      card.animationController.forward();
+      print(res);
+      if(resBody['avatar_url'] !=  null) {
+        ProfileCard card = new ProfileCard(
+          text: resBody['name'],
+          image: resBody['avatar_url'],
+          public_repos: resBody['public_repos'],
+          following: resBody['following'],
+          followers:resBody['followers'],
+          animationController: new AnimationController(
+            duration: new Duration(milliseconds: 700),
+            vsync: this,
+          ),
+        );
+        setState(() {
+          _card.insert(0, card);
+        });
+        card.animationController.forward();
+      }
     }
 
   void dispose() {
