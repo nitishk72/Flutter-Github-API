@@ -3,7 +3,7 @@
 A new Flutter application.
 
 ## APP Preview
-<img src="https://raw.githubusercontent.com/nitishk72/Flutter-Github-API/master/app.gif" width="400" height="100" />
+<img src="https://raw.githubusercontent.com/nitishk72/Flutter-Github-API/master/app.gif" width="200" height="700" />
 
 ## Getting Started
 
