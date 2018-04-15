@@ -1,7 +1,9 @@
 # Flutter-Github-API
 
 A new Flutter application.
-[!(https://raw.githubusercontent.com/nitishk72/Flutter-Github-API/master/app.gif)]
+
+## APP Preview
+![Alt Text](https://raw.githubusercontent.com/nitishk72/Flutter-Github-API/master/app.gif)
 
 ## Getting Started
 
