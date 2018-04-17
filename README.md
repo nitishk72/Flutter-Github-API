@@ -1,6 +1,9 @@
-# github_api
+# Flutter-Github-API
 
 A new Flutter application.
+
+## APP Preview
+<img src="https://raw.githubusercontent.com/nitishk72/Flutter-Github-API/master/app.gif" width="300" height="500" />
 
 ## Getting Started
 
