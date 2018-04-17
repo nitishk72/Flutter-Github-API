@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:github_api/ShowProfile.dart';
 class ProfileCard extends StatelessWidget {
-  ProfileCard({this.text,this.image ,this.public_repos,this.following,this.followers,this.animationController});
+  ProfileCard({this.user,this.text,this.image ,this.public_repos,this.following,this.followers,this.animationController});
 
   final String text;
+  final String user;
   final String image;
   final int public_repos;
   final int followers;
@@ -22,7 +23,7 @@ class ProfileCard extends StatelessWidget {
           child: new RaisedButton(
               color: Colors.white,
               onPressed: (){
-                Navigator.push(context, new MaterialPageRoute(builder: (context) => new ShowProfile(username:this.text)));
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => new ShowProfile(username:this.text,user:this.user)));
               },
               child: new Container(
                 padding: EdgeInsets.symmetric(vertical: 12.0),

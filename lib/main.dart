@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:github_api/Card.dart';
+import 'package:github_api/template/Card.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -27,7 +27,9 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
   final List<ProfileCard> _card = <ProfileCard>[];
   final TextEditingController _textController = new TextEditingController();
   var resBody;
+  String user = null;
   Future _getUser(String text) async{
+    user = text;
     _textController.clear();
     String url = "https://api.github.com/users/"+text;
       var res = await http
@@ -37,6 +39,7 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
       });
       if(resBody['avatar_url'] !=  null) {
         ProfileCard card = new ProfileCard(
+          user:user,
           text: resBody['name'],
           image: resBody['avatar_url'],
           public_repos: resBody['public_repos'],
