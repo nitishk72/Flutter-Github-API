@@ -8,16 +8,13 @@ class User extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Card(
       child: new Container(
+          height: 150.0,
           padding: EdgeInsets.all(12.0),
           margin: EdgeInsets.symmetric(vertical: 5.0,),
           child: new Row(
             children: <Widget>[
               new Container(
-                child: new FadeInImage.assetNetwork(
-                    placeholder: "https://avatars1.githubusercontent.com/u/424443?s=400&v=4",
-                    image: "image",
-                    width: 120.0,
-                ),
+                child: new Image.network(image,width: 120.0,),
                 margin: EdgeInsets.only(right: 10.0),
               ),
               new Container(

@@ -83,7 +83,6 @@ class ProfileState extends State<ShowProfile>{
   getFollowers() async{
     var res = await http.get(getURL()+"followers", headers: {"Accept": "application/json"});
     ResBody = json.decode(res.body);
-    print('follower');
     setState(() {
       for(var data in ResBody){
         _followers.add(
@@ -91,9 +90,7 @@ class ProfileState extends State<ShowProfile>{
               text: data['login'],
               image: data['avatar_url'],
             ));
-        print(data);
       }
-      print(_followers.length);
       followers_loading = false;
     });
   }
@@ -171,17 +168,6 @@ class ProfileState extends State<ShowProfile>{
     getFollowers();
     getFollowing();
   }
-  @override
-  void dispose() {
-    print("dispose");
-    super.dispose();
-  }
-  @override
-  void deactivate() {
-  print("deacctivate");
-    super.deactivate();
-  }
-
   Widget _Repo_data() {
     if(repo_loading){
       return new Center(
