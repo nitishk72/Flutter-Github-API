@@ -184,6 +184,15 @@ class ProfileState extends State<ShowProfile>{
       return new Center(
         child: new CircularProgressIndicator(),
       );
+    }else if(!repo_data){
+      return new Center(
+        child:new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text("$user have No Repo",style: Theme.of(context).textTheme.display1)
+            ]
+        ),
+      );
     }else{
       return new Column(
         children: <Widget>[
@@ -203,6 +212,15 @@ class ProfileState extends State<ShowProfile>{
       return new Center(
         child: new CircularProgressIndicator(),
       );
+    }else if(!gist_data){
+      return new Center(
+        child:new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text("$user have No Gists",style: Theme.of(context).textTheme.display1)
+            ]
+        ),
+      );
     }else{
       return new Column(
         children: <Widget>[
@@ -221,6 +239,15 @@ class ProfileState extends State<ShowProfile>{
     if(star_loading){
       return new Center(
         child: new CircularProgressIndicator(),
+      );
+    }else if(!star_data){
+      return new Center(
+        child:new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text("$user haven't starred any Repos",style: Theme.of(context).textTheme.display1)
+            ]
+        ),
       );
     }else{
       return new Column(
@@ -247,7 +274,7 @@ class ProfileState extends State<ShowProfile>{
         child:new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text("$user has no Followers",style: Theme.of(context).textTheme.display1)
+              new Text("$user is not to anyone",style: Theme.of(context).textTheme.display1)
             ]
         ),
       );
@@ -276,7 +303,7 @@ class ProfileState extends State<ShowProfile>{
         child:new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Text("$user is not following to anyone",style: Theme.of(context).textTheme.display1)
+            new Text("$user have no Follower",style: Theme.of(context).textTheme.display1)
           ]
         ),
       );
