@@ -274,7 +274,7 @@ class ProfileState extends State<ShowProfile>{
         child:new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text("$user is not to anyone",style: Theme.of(context).textTheme.display1)
+              new Text("$user is not following to anyone",style: Theme.of(context).textTheme.display1)
             ]
         ),
       );
