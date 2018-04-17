@@ -15,6 +15,8 @@ class ShowProfile extends StatefulWidget{
 }
 class ProfileState extends State<ShowProfile>{
   bool repo_loading = true,gist_loading = true,star_loading = true,followers_loading = true,following_loading = true;
+  bool repo_data = false,gist_data = false,star_data = false,followers_data = false,following_data = false;
+
   String username,user;
   ProfileState({this.username,this.user}){
     this.username = username;
@@ -42,10 +44,10 @@ class ProfileState extends State<ShowProfile>{
                 data['forks_count'],
                 data['language']
             ));
+        repo_data = true;
       }
-
-      repo_loading = false;
     });
+    repo_loading = false;
   }
   getGist() async{
     var res = await http.get(getURL()+"gists", headers: {"Accept": "application/json"});
@@ -57,6 +59,7 @@ class ProfileState extends State<ShowProfile>{
                 description : data['files'].keys.first,
                 created_at : data['created_at']
             ));
+        gist_data = true;
       }
 
       gist_loading = false;
@@ -70,11 +73,11 @@ class ProfileState extends State<ShowProfile>{
         _starred.add(
             new Starred(
                 data['name'],
-                data['description'],
                 data['stargazers_count'],
                 data['forks_count'],
                 data['language']
             ));
+        star_data = true;
       }
 
       star_loading = false;
@@ -90,6 +93,7 @@ class ProfileState extends State<ShowProfile>{
               text: data['login'],
               image: data['avatar_url'],
             ));
+        followers_data =  true;
       }
       followers_loading = false;
     });
@@ -104,10 +108,11 @@ class ProfileState extends State<ShowProfile>{
               text: data['login'],
               image: data['avatar_url'],
             ));
-      }
 
-      following_loading = false;
+        following_data = true;
+      }
     });
+    following_loading = false;
   }
   @override
   Widget build(BuildContext context) {
@@ -132,8 +137,14 @@ class ProfileState extends State<ShowProfile>{
           ),
           body: new TabBarView(
             children: [
-              new Container(
-                child: new Text("Profile Overview willbe here"),
+              new Center(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    new Icon(Icons.code,size: 100.0,),
+                    new Text("Overview",style: Theme.of(context).textTheme.display2),
+                  ],
+                )
               ),
               new Container(
                 child: _Repo_data()
@@ -231,6 +242,15 @@ class ProfileState extends State<ShowProfile>{
       return new Center(
         child: new CircularProgressIndicator(),
       );
+    }else if(!following_data){
+      return new Center(
+        child:new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text("$user has no Followers",style: Theme.of(context).textTheme.display1)
+            ]
+        ),
+      );
     }else{
       return new Column(
         children: <Widget>[
@@ -250,6 +270,15 @@ class ProfileState extends State<ShowProfile>{
     if(followers_loading){
       return new Center(
         child: new CircularProgressIndicator(),
+      );
+    }else if(!followers_data){
+      return new Center(
+        child:new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Text("$user is not following to anyone",style: Theme.of(context).textTheme.display1)
+          ]
+        ),
       );
     }else{
       return new Column(

@@ -15,7 +15,7 @@ class ProfileCard extends StatelessWidget {
     return new SizeTransition(
         sizeFactor: new CurvedAnimation(
           parent: animationController,
-          curve: Curves.easeOut,
+          curve: Curves.linear,
         ),
         axisAlignment: 0.0,
         child: new Container(

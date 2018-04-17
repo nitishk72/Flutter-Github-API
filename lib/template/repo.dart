@@ -21,7 +21,9 @@ class Repo extends StatelessWidget{
           child: new Row(
             children: <Widget>[
               new Container(
-                child: new CircleAvatar(child: new Text(name[0].toUpperCase()),),
+                child: new CircleAvatar(child: new Text(name[0].toUpperCase(),style: TextStyle(fontSize: 42.0),)),
+                width: 80.0,
+                height: 80.0,
                 margin: EdgeInsets.only(right: 10.0),
               ),
               new Container(

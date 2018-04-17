@@ -27,8 +27,12 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
   final List<ProfileCard> _card = <ProfileCard>[];
   final TextEditingController _textController = new TextEditingController();
   var resBody;
+  bool searching =  false,api_no_limit = false;
   String user = null;
   Future _getUser(String text) async{
+    setState(() {
+      searching = true;
+    });
     user = text;
     _textController.clear();
     String url = "https://api.github.com/users/"+text;
@@ -53,8 +57,13 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
         setState(() {
           _card.insert(0, card);
         });
+        print(_card.length);
         card.animationController.forward();
+      }else{
+        api_no_limit = true;
       }
+        print("after id");
+        searching = false;
     }
 
   void dispose() {
@@ -98,12 +107,13 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
       body: new Container(
           child: new Column(
               children: <Widget>[
-                new Divider(height: 1.0),
                 new Container(
                   decoration: new BoxDecoration(
                       color: Theme.of(context).cardColor),
                   child: _buildTextComposer(),
                 ),
+                new Divider(height: 2.0),
+                loading(),
                 new Flexible(
                     child: new ListView.builder(
                       padding: new EdgeInsets.all(8.0),
@@ -116,4 +126,35 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
       )
     );
   }
+  Widget loading(){
+    if(searching){
+      return new Container(
+        height: 60.0,
+        child:new Center(
+            child:new CircularProgressIndicator()
+        ),
+      );
+    }else if(api_no_limit) {
+      return new Card(
+        child: new Container(
+            height: 80.0,
+            color: Colors.red,
+            child: new Center(
+              child: new Text(
+                "API LIMIT EXCEDED",
+                style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 22.0
+                ),
+              ),
+            )
+        ),
+      );
+    }else{
+        return new Container(
+
+        );
+      }
+    }
 }
