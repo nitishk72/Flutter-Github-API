@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:github_api/Card.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -17,63 +18,6 @@ class Github extends StatelessWidget {
     );
   }
 }
-
-class ProfileCard extends StatelessWidget {
-  ProfileCard({this.text,this.image ,this.public_repos,this.following,this.followers,this.animationController});
-
-  final String text;
-  final String image;
-  final int public_repos;
-  final int followers;
-  final int following;
-  final AnimationController animationController;
-  @override
-  Widget build(BuildContext context) {
-    return new SizeTransition(
-        sizeFactor: new CurvedAnimation(
-            parent: animationController,
-            curve: Curves.easeOut,
-        ),
-        axisAlignment: 0.0,
-        child: new Card(
-          child: new Container(
-            margin: const EdgeInsets.all(15.0),
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                new Container(
-                  margin: const EdgeInsets.only(right:16.0),
-                  child: new Image.network(image,width: 100.0,height: 100.0,),
-                ),
-                new Expanded(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text(
-                          text,
-                          style: Theme.of(context).textTheme.title
-                      ),
-                      new Padding(padding: EdgeInsets.only(bottom: 30.0)),
-                      new Text('Public Repo : $public_repos'),
-                      new Padding(padding: EdgeInsets.only(bottom: 6.0)),
-                      new Row(
-                        children: <Widget>[
-                          new Text('Followers : $followers'),
-                          new Padding(padding: EdgeInsets.only(right: 15.0)),
-                          new Text('Following : $following'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),  
-          )
-        )
-    );
-  }
-}
-
 class GithubAPI extends StatefulWidget {
   @override
   State createState() => new GithubAPIState();
@@ -85,14 +29,12 @@ class GithubAPIState extends State<GithubAPI> with TickerProviderStateMixin {
   var resBody;
   Future _getUser(String text) async{
     _textController.clear();
-    String url = "https://api.github.com/users/";
-      print(url);
+    String url = "https://api.github.com/users/"+text;
       var res = await http
-          .get(Uri.encodeFull(url+text), headers: {"Accept": "application/json"});
+          .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
       setState(() {
         resBody = json.decode(res.body);
       });
-      print(res);
       if(resBody['avatar_url'] !=  null) {
         ProfileCard card = new ProfileCard(
           text: resBody['name'],
