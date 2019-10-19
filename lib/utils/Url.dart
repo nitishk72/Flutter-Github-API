@@ -13,7 +13,7 @@ class Url{
     return getURL()+"/starred";
   }
   String getFollowers(){
-    return getURL()+"/Follwers";
+    return getURL()+"/Followers";
   }
   String getFollowingURL(){
     return getURL()+"/Following";
